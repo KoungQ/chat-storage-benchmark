@@ -41,12 +41,12 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "query": "SELECT mean(\"value\") FROM \"http_req_duration\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter",
+          "query": "SELECT mean(\"value\") FROM \"http_req_duration\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A"
         }
       ],
-      "title": "MySQL 평균 응답 시간",
+      "title": "PostgreSQL 평균 응답 시간",
       "type": "stat"
     },
     {
@@ -114,12 +114,12 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "query": "SELECT mean(\"value\") FROM \"http_req_failed\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter",
+          "query": "SELECT mean(\"value\") FROM \"http_req_failed\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A"
         }
       ],
-      "title": "MySQL 에러율",
+      "title": "PostgreSQL 에러율",
       "type": "stat"
     },
     {
@@ -163,7 +163,7 @@
       "collapsed": false,
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
       "id": 101,
-      "title": "⏱ 응답 시간 비교 (MySQL vs MongoDB)",
+      "title": "⏱ 응답 시간 비교 (PostgreSQL vs MongoDB)",
       "type": "row"
     },
     {
@@ -189,8 +189,8 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "alias": "MySQL - $tag_name",
-          "query": "SELECT mean(\"value\") FROM \"http_req_duration\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter GROUP BY time($__interval), \"name\" fill(null)",
+          "alias": "PostgreSQL - $tag_name",
+          "query": "SELECT mean(\"value\") FROM \"http_req_duration\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter GROUP BY time($__interval), \"name\" fill(null)",
           "rawQuery": true,
           "refId": "A"
         },
@@ -202,7 +202,7 @@
           "refId": "B"
         }
       ],
-      "title": "응답 시간 Time Series (MySQL vs MongoDB)",
+      "title": "응답 시간 Time Series (PostgreSQL vs MongoDB)",
       "type": "timeseries"
     },
     {
@@ -231,8 +231,8 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "alias": "MySQL RPS",
-          "query": "SELECT non_negative_derivative(sum(\"value\"), 1s) FROM \"http_reqs\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "alias": "PostgreSQL RPS",
+          "query": "SELECT non_negative_derivative(sum(\"value\"), 1s) FROM \"http_reqs\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A"
         },
@@ -268,8 +268,8 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "alias": "MySQL 에러율",
-          "query": "SELECT mean(\"value\") FROM \"http_req_failed\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "alias": "PostgreSQL 에러율",
+          "query": "SELECT mean(\"value\") FROM \"http_req_failed\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A"
         },
@@ -310,8 +310,8 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "alias": "MySQL P95",
-          "query": "SELECT percentile(\"value\", 95) FROM \"http_req_duration\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "alias": "PostgreSQL P95",
+          "query": "SELECT percentile(\"value\", 95) FROM \"http_req_duration\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A"
         },
@@ -345,8 +345,8 @@
       "targets": [
         {
           "datasource": { "type": "influxdb", "uid": "influxdb-k6" },
-          "alias": "MySQL P99",
-          "query": "SELECT percentile(\"value\", 99) FROM \"http_req_duration\" WHERE (\"name\" =~ /^mysql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "alias": "PostgreSQL P99",
+          "query": "SELECT percentile(\"value\", 99) FROM \"http_req_duration\" WHERE (\"name\" =~ /^postgresql_/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A"
         },
@@ -364,12 +364,12 @@
   ],
   "refresh": "5s",
   "schemaVersion": 39,
-  "tags": ["k6", "benchmark", "mysql", "mongodb"],
+  "tags": ["k6", "benchmark", "postgresql", "mongodb"],
   "templating": { "list": [] },
   "time": { "from": "now-3h", "to": "now" },
   "timepicker": {},
   "timezone": "browser",
-  "title": "MySQL vs MongoDB Benchmark",
-  "uid": "mysql-mongo-benchmark",
+  "title": "PostgreSQL vs MongoDB Benchmark",
+  "uid": "postgresql-mongo-benchmark",
   "version": 1
 }

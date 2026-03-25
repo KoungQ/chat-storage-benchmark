@@ -1,16 +1,17 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: benchmark-mysql
+  postgres:
+    image: postgres:16
+    container_name: benchmark-postgresql
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: benchmark
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: benchmark
     ports:
-      - "3306:3306"
+      - "55432:5432"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-ppassword"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d benchmark"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -20,7 +21,7 @@ services:
     image: mongo:7.0
     container_name: benchmark-mongodb
     ports:
-      - "27017:27017"
+      - "37017:27017"
     volumes:
       - mongo-data:/data/db
     healthcheck:
@@ -38,12 +39,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      MYSQL_URL: jdbc:mysql://mysql:3306/benchmark?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/benchmark
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       MONGO_URI: mongodb://mongodb:27017/benchmark
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
       mongodb:
         condition: service_healthy
@@ -81,7 +82,7 @@ services:
     restart: unless-stopped
 
 volumes:
-  mysql-data:
+  postgres-data:
   mongo-data:
   influxdb-data:
   grafana-data:

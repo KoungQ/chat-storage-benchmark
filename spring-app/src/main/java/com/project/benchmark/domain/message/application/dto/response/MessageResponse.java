@@ -2,7 +2,6 @@ package com.project.benchmark.domain.message.application.dto.response;
 
 import com.project.benchmark.domain.message.domain.entity.ChatMessage;
 import com.project.benchmark.domain.message.infra.document.ChatMessageDocument;
-import com.project.benchmark.domain.message.infra.jsonb.JsonbChatMessage;
 
 import java.time.LocalDateTime;
 
@@ -33,17 +32,6 @@ public record MessageResponse(
                 document.getContent(),
                 document.getCreatedAt(),
                 document.getIsRead()
-        );
-    }
-
-    public static MessageResponse from(JsonbChatMessage message) {
-        return new MessageResponse(
-                message.id(),
-                message.roomId(),
-                message.senderId(),
-                message.content(),
-                message.createdAt(),
-                message.isRead()
         );
     }
 }
